@@ -50,7 +50,7 @@ class User:
 
 
 class UserDatabase:
-    def __init__(self, prompt: str, limit: int = 3) -> None:
+    def __init__(self, prompt: str = '', limit: int = 3) -> None:
         self.db = {}
         self.prompt = prompt
         self.limit = limit
