@@ -25,7 +25,7 @@ This also supports the famous cute Japanese text-to-speak AI API, **VOICEVOX**!
   - Unload Cogs with ```unload-cogs [LOADED_COG_NAME]```
   - Reload Cogs with ```reload-cogs [LOADED_COG_NAME]```
   - Load all available Cogs with ```load-all-cogs```. *!!!Not Recommended!!!*
-  - Unload all loaded Cogs with ```unload-all-cogs```.
+  - Unload all loaded Cogs with ```unload-all-cogs``` in the first place.
   - Reload all loaded Cogs with ```reload-all-cogs```.
 ## Warnings
 - Using ```load-all-cogs``` is not recommended since ```chat_cmds``` and ```user_cmds``` requires ```userdb```.
