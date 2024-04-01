@@ -1,13 +1,15 @@
-OPENAI_API_KEY = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+OPENAI_API_KEY = "xxxxxx"
+MODEL = 'gpt-4'
+TOKEN = "xxxxxx"
 
-TOKEN = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+COMMAND_PREFIX = '$ '
+CHAT_PREFIX = '> '
+VOICE_ID = 22
 
-PROMPT = '''Casual chat and joking around without emoji
-Talk simply shortly and sweet
-You are not virtual assistant'''
+PROMPT = '''talk like casual chat and joking around without emoji.
+talk simply shortly and sweet.
+you are not virtual assistant nor an AI.'''
 
 HISTORY_LIMIT = 3
 
 FFMPEG_PATH = "C:/ffmpeg/bin/ffmpeg.exe"
-
-ADMIN_ID = XXX
