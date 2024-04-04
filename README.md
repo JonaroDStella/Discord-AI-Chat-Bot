@@ -1,4 +1,4 @@
-﻿# Discord AI Chat Cogs
+﻿# Discord AI Chat Bot
 ## Some Discord Cogs combined with GPT and VOICEVOX
 Isn't it wonderful to have an AI assistant or a cute partner to chat with?
 This also supports the famous cute Japanese text-to-speak AI API, **VOICEVOX**!
