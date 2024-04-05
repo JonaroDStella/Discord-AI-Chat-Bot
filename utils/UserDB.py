@@ -1,16 +1,12 @@
-class data_class:
-    pass
-
 class User:
     def __init__(self, data: dict) -> None:
-        self.data = data_class()
-        self.data.__dict__ = data.copy()
+        self.data = data.copy()
 
     def set_data(self, name, value) -> str:
         try:
-            cls = self.data.__dict__[name].__class__
-            self.data.__dict__[name] = cls(value)
-            return f'{name} now is {self.data.__dict__[name]}'
+            cls = self.data[name].__class__
+            self.data[name] = cls(value)
+            return f'{name} now is {self.data[name]}'
         except ValueError:
             return f'No valid input. Data should be class: {cls.__name__}'
         except KeyError:
@@ -22,13 +18,13 @@ class User:
 class UserDB:
     def __init__(self) -> None:
         self.users: dict[int, User] = {}
-        self.data = data_class()
+        self.data = {}
 
     def set_data(self, name, value) -> str:
         try:
-            cls = self.data.__dict__[name].__class__
-            self.data.__dict__[name] = cls(value)
-            return f'{name} now is {self.data.__dict__[name]}'
+            cls = self.data[name].__class__
+            self.data[name] = cls(value)
+            return f'{name} now is {self.data[name]}'
         except ValueError:
             return f'No valid input. Data should be class: {cls.__name__}'
         except KeyError:
@@ -38,16 +34,16 @@ class UserDB:
 
     def get_user(self, id: int) -> User:
         if id not in self.users.keys():
-            self.users[id] = User(self.data.__dict__)
+            self.users[id] = User(self.data)
         return self.users[id]
 
     def sync_data(self, user: User) -> None:
-        for key in user.data.__dict__.keys():
-            if key not in self.data.__dict__.keys():
-                user.data.__dict__.pop(key)
-        for key in self.data.__dict__.keys():
-            if key not in user.data.__dict__.keys():
-                user.data.__dict__[key] = self.data.__dict__[key]
+        for key in user.data.keys():
+            if key not in self.data.keys():
+                user.data.pop(key)
+        for key in self.data.keys():
+            if key not in user.data.keys():
+                user.data[key] = self.data[key]
 
     def sync_all_data(self) -> None:
         for user in self.users.values():

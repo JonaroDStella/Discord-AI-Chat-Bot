@@ -17,9 +17,9 @@ class userdb_cmds(commands.Cog):
         user = self.client.userdb.get_user(ctx.author.id)
         output = ''
         if len(args) == 0:
-            args = user.data.__dict__.keys()
+            args = user.data.keys()
         for name in args:
-            output += f'\n{name}: {user.data.__dict__[name]}'
+            output += f'\n{name}: {user.data[name]}'
         await ctx.channel.send(f'```{output}```')
 
     @commands.command(name='set')
@@ -31,7 +31,7 @@ class userdb_cmds(commands.Cog):
     @commands.command(name='reset')
     async def reset(self, ctx: commands.Context):
         user = self.client.userdb.get_user(ctx.author.id)
-        user.data.__dict__ = self.client.userdb.data.__dict__.copy()
+        user.data = self.client.userdb.data.copy()
         await ctx.channel.send('```Reset and synced```')
 
 

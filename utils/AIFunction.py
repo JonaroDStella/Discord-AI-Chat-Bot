@@ -7,34 +7,34 @@ from config import *
 openai.api_key = OPENAI_API_KEY
 
 
-def make_completion(user: User, message) -> tuple[bool, str]:
+async def make_completion(user: User, message) -> tuple[bool, str]:
     try:
-        history: list = user.data.history
+        history: list = user.data['history']
         history.append({'role': 'user', 'content': message})
-        if len(history) > user.data.limit:
-            history = history[-user.data.limit:]
+        if len(history) > user.data['limit']:
+            history = history[-user.data['limit']:]
 
         completion = openai.ChatCompletion.create(
             model=MODEL,
             messages=[
-                {'role': 'system', 'content': user.data.prompt}] + user.data.history
+                {'role': 'system', 'content': user.data['prompt']}] + user.data['history']
         )
         reply: str = completion.choices[0].message.content
         history.append({"role": "assistant", "content": reply})
-        user.data.history = history
+        user.data['history'] = history
         return True, reply
 
     except Exception as error:
         return False, error
 
-def translation(message: str, lang: str):
+async def translation(message: str, lang: str):
     completion = openai.ChatCompletion.create(
             model=MODEL,
             messages=[{'role': 'system', 'content': f'translate to {lang}'}, {'role': 'user', 'content': message}]
             )
     return completion.choices[0].message.content
 
-def Voice(voice: discord.VoiceClient, voice_id: int, jp: str):
+async def Voice(voice: discord.VoiceClient, voice_id: int, jp: str):
     VOICE = Voicevox()
     stream = VOICE.speak(jp, voice_id)
     if voice.is_playing():

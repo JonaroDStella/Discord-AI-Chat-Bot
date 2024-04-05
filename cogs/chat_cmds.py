@@ -9,10 +9,10 @@ class chat_cmds(commands.Cog):
     def __init__(self,  client: CentralBot):
         importlib.reload(AIFunction)
         self.client = client
-        self.client.userdb.data.prompt = PROMPT
-        self.client.userdb.data.limit = HISTORY_LIMIT
-        self.client.userdb.data.voice_id = VOICE_ID
-        self.client.userdb.data.history = []
+        self.client.userdb.data['prompt'] = PROMPT
+        self.client.userdb.data['limit'] = HISTORY_LIMIT
+        self.client.userdb.data['voice_id'] = VOICE_ID
+        self.client.userdb.data['history'] = []
         self.client.userdb.sync_all_data()
 
     @commands.command(name='history')
@@ -23,8 +23,8 @@ class chat_cmds(commands.Cog):
 
     @commands.command(name='clear-history')
     async def clear_history(self, ctx: commands.Context):
-        chat = self.client.userdb.get_user(ctx.author.id)
-        chat.data.history.clear()
+        user = self.client.userdb.get_user(ctx.author.id)
+        user.data['history'].clear()
         await ctx.channel.send('```cleaned```')
 
     @commands.command(name= 'join')
@@ -58,7 +58,7 @@ class chat_cmds(commands.Cog):
 
             user = self.client.userdb.get_user(ctx.author.id)
 
-            sta, reply = await self.client.loop.run_in_executor(None, AIFunction.make_completion, user, msg)
+            sta, reply = await AIFunction.make_completion(user, msg)
             if not sta:
                 print(reply)
                 await ctx.channel.send('Completion failed')
@@ -69,10 +69,10 @@ class chat_cmds(commands.Cog):
 
             if voice:
                 async with ctx.channel.typing():
-                    jp_reply = await self.client.loop.run_in_executor(None, AIFunction.translation, reply, 'japanese')
+                    jp_reply = await AIFunction.translation(reply, 'japanese')
                     print('translated :', jp_reply)
                     print(user.data.voice_id)
-                    await self.client.loop.run_in_executor(None, AIFunction.Voice, voice, user.data.voice_id, jp_reply)
+                    await AIFunction.Voice(voice, user.data.voice_id, jp_reply)
 
             await ctx.channel.send(reply)
 
