@@ -14,12 +14,14 @@ class CentralBot(commands.Bot):
         super().__init__(command_prefix=command_prefix, intents=intents)
 
         @self.command(name='reload-all-cogs', description='Reload all loaded cogs')
+        @commands.has_permissions(administrator=True)
         async def reload_all_cogs(ctx: commands.Context) -> None:
             for ext in self.coglist:
                 await self.reload_extension(ext)
             await ctx.channel.send('Reloaded')
 
         @self.command(name='reload-cogs', description='Reload cogs')
+        @commands.has_permissions(administrator=True)
         async def reload_cogs(ctx: commands.Context, *args) -> None:
             for ext in args:
                 try:
@@ -29,16 +31,19 @@ class CentralBot(commands.Bot):
                     await ctx.channel.send(f"An error occurred while Reloading {ext}. See details below:\n```\n{error}\n```")
 
         @self.command(name='load-cogs', description='Load cogs')
+        @commands.has_permissions(administrator=True)
         async def load_cogs(ctx: commands.Context, *args) -> None:
             for ext in args:
                 await ctx.channel.send(await self.load(self.cogs_base + ext))
 
         @self.command(name='unload-cogs', description='Unload cogs')
+        @commands.has_permissions(administrator=True)
         async def unload_cogs(ctx: commands.Context, *args) -> None:
             for ext in args:
                 await ctx.channel.send(await self.unload(self.cogs_base + ext))
 
         @self.command(name='load-all-cogs', description='Load all cogs in directory')
+        @commands.has_permissions(administrator=True)
         async def load_all_cogs(ctx: commands.Context) -> None:
             for dirpath, _, fnames in os.walk(self.cogs_dir):
                 for fname in fnames:
@@ -48,17 +53,20 @@ class CentralBot(commands.Bot):
                         await ctx.channel.send(await self.load(ext))
 
         @self.command(name='unload-all-cogs', description='Unload all loaded cogs')
+        @commands.has_permissions(administrator=True)
         async def unload_all_cogs(ctx: commands.Context) -> None:
             while len(self.coglist):
                 await ctx.channel.send(await self.unload(self.coglist[0]))
 
         @self.command(name='show-cogs', description='Display all loaded cogs')
+        @commands.has_permissions(administrator=True)
         async def show_cogs(ctx: commands.Context) -> None:
             output = "\n".join(
                 self.coglist) if self.coglist else "No cogs loaded"
             await ctx.channel.send(f'```\n{output}\n```')
 
         @self.command(name='list-cogs', description='Display all available cogs')
+        @commands.has_permissions(administrator=True)
         async def list_cogs(ctx: commands.Context) -> None:
             output = ''
             for dirpath, _, fnames in os.walk(self.cogs_dir):
