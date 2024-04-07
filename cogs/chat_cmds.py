@@ -67,14 +67,15 @@ class chat_cmds(commands.Cog):
             print(f'{self.client.user} : {reply}')
             voice = discord.utils.get(self.client.voice_clients, guild=ctx.guild)
 
-            if voice:
-                async with ctx.channel.typing():
-                    jp_reply = await AIFunction.translation(reply, 'japanese')
-                    print('translated :', jp_reply)
-                    print(user.data.voice_id)
-                    await AIFunction.Voice(voice, user.data.voice_id, jp_reply)
+            for splitted in AIFunction.split_message(reply):
+                if voice:
+                    async with ctx.channel.typing():
+                        jp_reply = await AIFunction.translation(splitted, 'japanese')
+                        print('translated :', jp_reply)
+                        print(user.data['voice_id'])
+                        await AIFunction.Voice(voice, user.data['voice_id'], jp_reply)
 
-            await ctx.channel.send(reply)
+                await ctx.channel.send(splitted)
 
 async def setup(client: commands.Bot) -> None:
     await client.add_cog(chat_cmds(client))
