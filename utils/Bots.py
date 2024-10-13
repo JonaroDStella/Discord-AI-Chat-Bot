@@ -7,8 +7,13 @@ class CentralBot(commands.Bot):
     def __init__(self, command_prefix: str, cogs_dir: str) -> None:
         self.coglist = []
         self.cogs_dir = cogs_dir
+<<<<<<< HEAD
         if not self.cogs_dir.endswith('\\'):
             self.cogs_dir += '\\'
+=======
+        if not self.cogs_dir.endswith(os.sep):
+            self.cogs_dir += os.sep
+>>>>>>> 89908d9 (fixed to adapt new openai api)
         self.cogs_base = self.cogs_dir.replace(os.sep, '.')
         intents = discord.Intents.all()
         super().__init__(command_prefix=command_prefix, intents=intents)
@@ -79,6 +84,14 @@ class CentralBot(commands.Bot):
                         output += '\n' + path
             await ctx.channel.send(f'```\n{output}\n```')
 
+<<<<<<< HEAD
+=======
+        @self.command(name="sync") 
+        async def sync(ctx: commands.Context):
+            synced = await self.tree.sync()
+            await ctx.channel.send(f"Synced {len(synced)} command(s).")
+
+>>>>>>> 89908d9 (fixed to adapt new openai api)
     async def on_ready(self):
         print('Bot ready as', self.user)
 
