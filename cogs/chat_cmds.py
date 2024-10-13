@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import importlib
-from config import *
+import config
 from utils.Bots import CentralBot
 from utils import AIFunction
 
@@ -9,9 +9,9 @@ class chat_cmds(commands.Cog):
     def __init__(self,  client: CentralBot):
         importlib.reload(AIFunction)
         self.client = client
-        self.client.userdb.data['prompt'] = PROMPT
-        self.client.userdb.data['limit'] = HISTORY_LIMIT
-        self.client.userdb.data['voice_id'] = VOICE_ID
+        self.client.userdb.data['prompt'] = config.PROMPT
+        self.client.userdb.data['limit'] = config.HISTORY_LIMIT
+        self.client.userdb.data['voice_id'] = config.VOICE_ID
         self.client.userdb.data['history'] = []
         self.client.userdb.sync_all_data()
 
@@ -51,8 +51,8 @@ class chat_cmds(commands.Cog):
         if ctx.author == self.client.user:
             return
 
-        if ctx.content.startswith(CHAT_PREFIX):
-            msg = ctx.content[len(CHAT_PREFIX):].strip()
+        if ctx.content.startswith(config.CHAT_PREFIX):
+            msg = ctx.content[len(config.CHAT_PREFIX):].strip()
             print(f'{ctx.channel.name} : ')
             print(f'{ctx.author} > {msg}')
 

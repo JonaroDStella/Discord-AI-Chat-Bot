@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-from config import *
 from utils.Bots import CentralBot
 
 
