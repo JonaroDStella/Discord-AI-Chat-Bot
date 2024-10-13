@@ -1,5 +1,6 @@
 OPENAI_API_KEY = "xxxxxx"
 MODEL = 'gpt-4'
+NGROK_KEY = 'xxxxxx'
 TOKEN = "xxxxxx"
 
 COMMAND_PREFIX = '$ '
