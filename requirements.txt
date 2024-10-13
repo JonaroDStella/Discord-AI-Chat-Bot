@@ -1,4 +1,4 @@
 discord.py
-pyaudio
+saucenao-api
 requests
 openai
