@@ -18,7 +18,7 @@ class chat_cmds(commands.Cog):
     @commands.command(name='history')
     async def history(self, ctx: commands.Context):
         chat = self.client.userdb.get_user(ctx.author.id)
-        history = '\n'.join(map(str, chat.data.history))
+        history = '\n'.join(map(str, chat.data['history']))
         await ctx.channel.send(f"```{history if history != '' else 'None'}```")
 
     @commands.command(name='clear-history')
