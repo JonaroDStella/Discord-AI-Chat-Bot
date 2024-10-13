@@ -1,13 +1,4 @@
 import discord
-<<<<<<< HEAD
-import openai
-from utils.UserDB import User
-from utils.VoiceVox import Voicevox
-from config import *
-
-openai.api_key = OPENAI_API_KEY
-
-=======
 from openai import AsyncOpenAI, OpenAIError
 from utils.UserDB import User
 from utils.VoiceVox import Voicevox
@@ -15,7 +6,6 @@ from saucenao_api import AIOSauceNao
 from config import *
 
 client = AsyncOpenAI(api_key=OPENAI_API_KEY)
->>>>>>> 89908d9 (fixed to adapt new openai api)
 
 async def make_completion(user: User, message) -> tuple[bool, str]:
     try:
@@ -24,11 +14,7 @@ async def make_completion(user: User, message) -> tuple[bool, str]:
         if len(history) > user.data['limit']:
             history = history[-user.data['limit']:]
 
-<<<<<<< HEAD
-        completion = openai.ChatCompletion.create(
-=======
         completion = await client.chat.completions.create(
->>>>>>> 89908d9 (fixed to adapt new openai api)
             model=MODEL,
             messages=[
                 {'role': 'system', 'content': user.data['prompt']}] + user.data['history']
@@ -42,11 +28,7 @@ async def make_completion(user: User, message) -> tuple[bool, str]:
         return False, error
 
 async def translation(message: str, lang: str):
-<<<<<<< HEAD
-    completion = openai.ChatCompletion.create(
-=======
     completion = await client.chat.completions.create(
->>>>>>> 89908d9 (fixed to adapt new openai api)
             model=MODEL,
             messages=[{'role': 'system', 'content': f'translate to {lang}'}, {'role': 'user', 'content': message}]
             )
@@ -73,9 +55,6 @@ def split_message(message: str) -> list[str]:
         messages.append(message[:index])
         message = message[index+1:]
     messages.append(message)
-<<<<<<< HEAD
-    return messages
-=======
     return messages
 
 async def generate_image(model:str, prompt: str, size: str):
@@ -107,4 +86,3 @@ async def find_source(image: discord.Attachment):
             return False, "Found no sauce uwq."
     except Exception as e:
         return False, f"Unknown error: ```\n{e}\n```"
->>>>>>> 89908d9 (fixed to adapt new openai api)
